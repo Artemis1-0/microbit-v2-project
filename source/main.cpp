@@ -3,12 +3,17 @@
 
 MicroBit uBit;
 
+void buttonA(MicroBitEvent e)
+{
+    uBit.io.speaker.setAnalogValue( 512 );
+    uBit.io.speaker.setAnalogPeriod( 1000 );
+    uBit.sleep( 1000 );
+    uBit.io.speaker.setAnalogValue( 0 );
+}
+
 int main()
 {
     uBit.init();
-
-    out_of_box_experience();
-
-    microbit_panic( 999 );
+    uBit.messageBus.listen( MICROBIT_ID_BUTTON_A, MICROBIT_BUTTON_EVT_CLICK, buttonA );
 }
 
