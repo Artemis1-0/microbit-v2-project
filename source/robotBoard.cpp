@@ -151,3 +151,74 @@ void KitronikRoboticsBoard::allOff() {
 
     }
 }
+
+void KitronikRoboticsBoard::stepperMotorTurnAngle(int stepper, Direction direction, int angle) {
+    int angleToSteps = 0;
+
+    if ( stepper == 1)
+    {
+        int angleToSteps = ((angle - 1) * stepper1Steps) / ( 360 - 1) + 1;
+    }
+    else 
+    {
+        int angleToSteps = ((angle - 1) * stepper2Steps) / ( 360 - 1) + 1;
+    }
+
+    turnStepperMotor(stepper, direction, angleToSteps);
+}
+
+void KitronikRoboticsBoard::stepperMotorTurnSteps(int stepper, Direction direction, int steps) {
+    turnStepperMotor(stepper, direction, steps);
+}
+
+void KitronikRoboticsBoard::turnStepperMotor(int stepper, Direction direction, int steps) {
+    int stepCounter = 0;
+
+    if (stepInit == false)
+    {
+        stepStage = 1;
+        stepInit = true;
+    }
+
+    while (stepCounter < steps)
+    {
+        if (stepper == 1 || stepper == 3)
+        {
+            if (stepper == 1)
+            {
+                currentMotor = 1
+            }
+            else
+            {
+                currentMotor = 3
+            } 
+        }
+        else
+        {
+            if (stepper == 1)
+            {
+                currentMotor = 2
+            }
+            else
+            {
+                currentMotor = 4
+            }
+        }
+
+        Direction currentDirection;
+
+        if (stepStage == 1 || stepStage ==4)
+        {
+            currentDirection = FORWARD;
+        }
+
+        else
+        {
+            currentDirection = REVERSE;
+        }
+
+        motorOn(currentMotor, currentDirection, 100);
+        uBit.sleep(20);
+
+        
+    }
