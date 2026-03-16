@@ -34,7 +34,6 @@ int main()
 {
     uBit.init();
     theBoard.allOff();
-    buttonA(MicroBitEvent());
     uBit.messageBus.listen( MICROBIT_ID_BUTTON_A, MICROBIT_BUTTON_EVT_CLICK, buttonA );
     uBit.messageBus.listen( MICROBIT_ID_BUTTON_B, MICROBIT_BUTTON_EVT_CLICK, buttonB );
 
