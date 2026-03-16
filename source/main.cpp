@@ -40,6 +40,7 @@ void onButtonPress(MicroBitEvent e) {
 void serialDisplay() {
     while(1) {
         ManagedString text = uBit.serial.readUntil("\n");
+        uBit.serial.printf("Received: %s\r\n", text.toCharArray());
         uBit.display.scroll(text);
     }
 }
