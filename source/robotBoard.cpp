@@ -220,5 +220,29 @@ void KitronikRoboticsBoard::turnStepperMotor(int stepper, Direction direction, i
         motorOn(currentMotor, currentDirection, 100);
         uBit.sleep(20);
 
-        
+        if (direction == FORWARD){
+            if (stepStage == 4)
+            {
+                stepStage = 1;
+            }
+            else
+            {
+                stepStage++;
+            }
+        }
+            
+        else if (direction == REVERSE)
+        {
+            if (stepStage == 1)
+            {
+                stepStage = 4;
+            }
+            else
+            {
+                stepStage--;
+            }
+        }
+
+        stepCounter++;
     }
+}
