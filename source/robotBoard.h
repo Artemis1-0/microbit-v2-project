@@ -35,7 +35,7 @@ class KitronikRoboticsBoard {
         int stepStage = 0;
         int stepper1Steps = 200;
         int stepper2Steps = 200;
-        int currentMotor = 1
+        int currentMotor = 1;
 };
 
 #endif

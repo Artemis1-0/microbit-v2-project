@@ -186,22 +186,22 @@ void KitronikRoboticsBoard::turnStepperMotor(int stepper, Direction direction, i
         {
             if (stepper == 1)
             {
-                currentMotor = 1
+                currentMotor = 1;
             }
             else
             {
-                currentMotor = 3
-            } 
+                currentMotor = 3;
+            };
         }
         else
         {
             if (stepper == 1)
             {
-                currentMotor = 2
+                currentMotor = 2;
             }
             else
             {
-                currentMotor = 4
+                currentMotor = 4;
             }
         }
 
