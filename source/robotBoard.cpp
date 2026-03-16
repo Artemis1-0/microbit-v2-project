@@ -13,7 +13,14 @@ extern MicroBit uBit;
 #define REG_OFFSET 4
 #define SERVO_MULTI 226
 #define SERVO_ZERO_OFFSET 0x66
-// ... etc
+
+// Define Variables
+int chipAddress = 0x6C;
+bool initialised = false;
+bool stepInit = false;
+int stepStage = 0;
+int stepper1Steps = 200;
+int stepper2Steps = 200;
 
 enum Direction { FORWARD, REVERSE };
 
