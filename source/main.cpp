@@ -37,6 +37,20 @@ void onButtonPress(MicroBitEvent e) {
     uBit.serial.printf("Button Pressed\r\n");
 }
 
+void serialDisplay() {
+    while(1) {
+        ManagedString text = uBit.serial.readUntil("\n");
+        uBit.display.scroll(text);
+    }
+}
+
+void pinMonitor() {
+    while(1) {
+        uBit.serial.printf("P15: %d\r\n", uBit.io.P15.getDigitalValue());
+        uBit.sleep(100);
+    }
+}
+
 int main()
 {
     uBit.init();
@@ -51,12 +65,8 @@ int main()
     uBit.messageBus.listen( MICROBIT_ID_BUTTON_A, MICROBIT_BUTTON_EVT_CLICK, buttonA );
     uBit.messageBus.listen( MICROBIT_ID_BUTTON_B, MICROBIT_BUTTON_EVT_CLICK, buttonB );
 
-    while(1) {
-    uBit.serial.printf("P15: %d\r\n", uBit.io.P15.getDigitalValue());
-    uBit.sleep(100);
-    ManagedString text = uBit.serial.readUntil("\n");
-    uBit.display.scroll(text);
-    }
+    create_fiber(serialDisplay);
+    create_fiber(pinMonitor);
 
     release_fiber();
 }
