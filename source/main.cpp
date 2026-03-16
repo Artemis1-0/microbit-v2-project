@@ -5,6 +5,8 @@
 MicroBit uBit;
 KitronikRoboticsBoard theBoard;
 
+uint32_t lastMotorStart = 0;
+
 void buttonA(MicroBitEvent e)
 {
     theBoard.motorOff(1);
@@ -28,13 +30,20 @@ void buttonA(MicroBitEvent e)
 void buttonB(MicroBitEvent e)
 {
     uBit.serial.printf("Button B Pressed\r\n");
+    lastMotorStart = system_timer_current_time();
+    uBit.serial.printf("Last motor start: ");
+    uBit.serial.printf(ManagedString((int)lastMotorStart).toCharArray());
+    uBit.serial.printf("\r\n");
     theBoard.motorOn(1, FORWARD, 50);
+    uBit.serial.printf("Motor 1 on forward at speed 50\r\n");
 }
 
 void onButtonPress(MicroBitEvent e) {
     uBit.serial.printf("P15 Pressed\r\n");
-    uBit.display.scroll("Hello World!");
-    uBit.serial.printf("Button Pressed\r\n");
+    if (system_timer_current_time() - lastMotorStart < 1000) return;
+    uBit.serial.printf("Turning motor off\r\n");
+    theBoard.motorOff(1);
+    uBit.serial.printf("Motor 1 off\r\n");
 }
 
 void serialDisplay() {
