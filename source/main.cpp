@@ -10,6 +10,9 @@ uint32_t lastMotorStart = 0;
 void buttonA(MicroBitEvent e)
 {
     theBoard.motorOff(1);
+    for (int servo = 1; servo <= 8; servo++) {
+        theBoard.servoWrite(servo, 0);
+    }
     uBit.serial.printf("Button A Pressed\r\n");
     uBit.io.speaker.setAnalogValue( 256 );
     uBit.io.speaker.setAnalogPeriodUs( 1136 );
@@ -34,13 +37,16 @@ void buttonB(MicroBitEvent e)
     uBit.serial.printf("Last motor start: ");
     uBit.serial.printf(ManagedString((int)lastMotorStart).toCharArray());
     uBit.serial.printf("\r\n");
+    for (int servo = 1; servo <= 8; servo++) {
+        theBoard.servoWrite(servo, 90);
+    }
     theBoard.motorOn(1, FORWARD, 50);
     uBit.serial.printf("Motor 1 on forward at speed 50\r\n");
 }
 
 void onButtonPress(MicroBitEvent e) {
     uBit.serial.printf("P15 Pressed\r\n");
-    if (system_timer_current_time() - lastMotorStart < 1000) return;
+    if (system_timer_current_time() - lastMotorStart < 5000) return;
     uBit.serial.printf("Turning motor off\r\n");
     theBoard.motorOff(1);
     uBit.serial.printf("Motor 1 off\r\n");
@@ -57,7 +63,7 @@ void serialDisplay() {
 void pinMonitor() {
     while(1) {
         uBit.serial.printf("P15: %d\r\n", uBit.io.P15.getDigitalValue());
-        uBit.sleep(100);
+        uBit.sleep(400);
     }
 }
 

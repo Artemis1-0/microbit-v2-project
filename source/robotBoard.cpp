@@ -57,6 +57,9 @@ void KitronikRoboticsBoard::motorOn(int motor, Direction direction, int speed) {
         {
             HighByte = true;
             HighOutputVal = (OutputVal / 256);
+            uBit.serial.printf("High output val: ");
+            uBit.serial.printf(ManagedString((int)HighOutputVal).toCharArray());
+            uBit.serial.printf("\r\n");
         }
 
         buf[0] = motorReg;
@@ -67,6 +70,9 @@ void KitronikRoboticsBoard::motorOn(int motor, Direction direction, int speed) {
         if (HighByte)
         {
             buf[1] = int(HighOutputVal);
+            uBit.serial.printf("Output val: ");
+            uBit.serial.printf(ManagedString((int)buf[1]).toCharArray());
+            uBit.serial.printf("\r\n");
         }
         else
         {
